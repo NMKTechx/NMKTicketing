@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Set up Django environment.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SkillSphere.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Ticketing.settings')
 django.setup()
 
 User = get_user_model()
