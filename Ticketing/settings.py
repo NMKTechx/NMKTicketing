@@ -12,7 +12,21 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from datetime import datetime
 from pathlib import Path
+from dotenv import load_dotenv
+import dj_database_url
 
+# Ensure the project root is in the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', "nmkticketing.onrender.com,127.0.0.1").split(",")
+DEBUG = os.getenv("DEBUG", "True") == "True"
+
+# Load environment variables from a .env file
+load_dotenv()
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# SECURITY SETTINGS
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,8 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ln))obaqevw4r=mc8^)k7820na!)yi11ia*ek608tsj@)j+1u6'
-ALLOWED_HOSTS = ['icthelpdesk.intranet', '127.0.0.1', 'localhost', '172.1.4.147', '*']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -54,6 +67,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,32 +99,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Ticketing.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-'''DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ticketing_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': ''
-    }
-
-}'''
-
+# DATABASE CONFIGURATION
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ticketing_db',
-        'USER': 'Admin',
-        'PASSWORD': '123456l7',
-        'HOST': 'localhost',
-        'PORT': '5432',
-
-    }
-
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
 # Password validation
