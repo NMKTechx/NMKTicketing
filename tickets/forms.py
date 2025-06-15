@@ -12,6 +12,7 @@ class TicketForm(forms.ModelForm):
         ('Network', 'Network Issue'),
         ('Hardware', 'Hardware Issue'),
         ('Software', 'Software Issue'),
+        ('ERP', 'ERP Issue'),
         ('Office Assistance', 'Office Assistance'),
         ('Physical Conference/Meetings', 'Physical Conference/Meetings'),
         ('Virtual Conference/Meetings', 'Virtual Conference/Meetings'),
